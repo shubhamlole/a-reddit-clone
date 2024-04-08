@@ -12,7 +12,7 @@ pipeline{
         DOCKER_PASS = 'dockerhub'
         IMAGE_NAME = "${DOCKER_USER}" + "/" + "${APP_NAME}"
         IMAGE_TAG = "${RELEASE}-${BUILD_NUMBER}"
-        SONAR_TOKEN = credentials('SonarQube-Token')
+        
     }
     stages{
         stage("Clean Workspace"){
@@ -27,10 +27,10 @@ pipeline{
         }
         stage("SonarQube Analysis"){
             steps{
+                withSonarQubeEnv('SonarQube-Server'){
                 sh '''$SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=Reddit-Clone-CI \
-                -Dsonar.projectKey=Reddit-Clone-CI \
-                -Dsonar.host.url=http://172.31.15.110:9000 \
-                -Dsonar.login=${SONAR_TOKEN}'''
+                -Dsonar.projectKey=Reddit-Clone-CI '''
+                }
             }
         }
         stage("Quality Gate"){
