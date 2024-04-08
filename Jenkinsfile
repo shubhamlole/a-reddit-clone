@@ -36,12 +36,14 @@ pipeline{
                     waitForQualityGate abortPipeline: false, credentialsId: 'SonarQube-Token'
                 }
             }
-            stage("Install Dependencies"){
-                steps{
-                    sh "npm install"
-                }
+        }
+        stage("Install Dependencies"){
+            steps{
+                sh "npm install"
             }
-            stage("Trivy FS Scan"){
+        }
+        stage("Trivy FS Scan"){
+            steps{
                 sh "trivy fs . > trivyfs.txt"
             }
         }
