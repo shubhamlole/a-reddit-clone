@@ -74,8 +74,8 @@ pipeline{
     }
     post{
         always{
-            emailext attachlog: true,
-            subject: "'${currentBuild.result}",
+            emailext attachLog: true,
+            subject: "'${currentBuild.result}'",
             body: "Project: ${env.JOB_NAME}<br/>" + 
                   "Build Number: ${env.BUILD_NUMBER}<br/>" +
                   "URL: ${env.BUILD_URL}<br/>",
