@@ -1,5 +1,5 @@
 # Reddit Clone App on Kubernetes
-Test 200
+Hi This is Reddit App deployed on k8s cluster using argocd
 
 
 
