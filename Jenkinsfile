@@ -45,6 +45,22 @@ pipeline{
               sh "npm install"
             }
         }
+        stage('trivy fs scan') {
+            steps{
+                sh "trivy fs . > trivyfs.txt"
+            }
+        }
+        stage('build and push docker image') {
+            steps{
+                script{
+                    docker.withRegistry('', 'DOCKER_PASS') {
+                        docker_image = docker.build "${IMAGE_NAME}"
+                    }
+                    docker.withRegistry('', 'DOCKER_PASS') {
+                        docker_image.push("${IMAGE_TAG}")
+                        docker_image.push('latest')               }
+            }
+        }
     }
        
 }
