@@ -25,9 +25,19 @@ pipeline{
                 git url:'https://github.com/shubhamlole/a-reddit-clone.git', branch: 'main'
             }
         }
-        stage("sample echo"){
+        stage("sonarqube analysis") {
             steps{
-            echo "build_url: ${env.BUILD_URL}"
+                withSonarQubeEnv("SonarQubr-Server") {
+                    sh '''$SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName= Reddit-clone-CI \
+                    -Dsonar.projectKey = Reddit-clone-CI'''
+                }
+            }
+        }
+        stage("Quality Gate"){
+            steps{
+                script {
+                    waitForQualityGate abortPipeline: false, credentialsId: 'SonarQub-Token'
+                }
             }
         }
     }
