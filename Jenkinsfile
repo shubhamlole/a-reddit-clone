@@ -26,7 +26,9 @@ pipeline{
             }
         }
         stage("sample echo"){
+            steps{
             echo "build_url: ${env.BUILD_URL}"
+            }
         }
     }
        
