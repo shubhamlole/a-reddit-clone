@@ -93,7 +93,7 @@ pipeline{
     post{
         always {
             emailext attachLog: true;
-            subject: "'${currentBuild.result}",
+            subject: "'${currentBuild.result}'",
             body: "Project: ${env.JOB_NAME} </br>" + ,
                   "BUILD_NUMBER: ${env.BUILD_NUMBER} </br>" + ,
                   "URL: ${env.BUILD_URL} </br>"
