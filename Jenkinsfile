@@ -94,9 +94,9 @@ pipeline{
         always {
             emailext attachLog: true;
             subject: "'${currentBuild.result}'",
-            body: "Project: ${env.JOB_NAME} </br>" + ,
-                  "BUILD_NUMBER: ${env.BUILD_NUMBER} </br>" + ,
-                  "URL: ${env.BUILD_URL} </br>"
+            body: "Project: ${env.JOB_NAME} </br>" + 
+                  "BUILD_NUMBER: ${env.BUILD_NUMBER} </br>" + 
+                  "URL: ${env.BUILD_URL} </br>",
             to: 'loleshubham46@gmail.com',
             attachLog: 'trivyfs.txt ,trivyimage.txt'
         }
