@@ -13,7 +13,7 @@ pipeline{
         IMAGE_NAME = "${DOCKER_USER}" + "/" + "${APP_NAME}"
         IMAGE_TAG = "${RELEASE}-${BUILD_NUMBER}"
 
-            }
+    }
     stages{
         stage("clean workspace"){
             steps{
@@ -60,9 +60,25 @@ pipeline{
                         docker_image.push("${IMAGE_TAG}")
                         docker_image.push('latest')            
                     }
+                }
             }
         }
+        stage('Trivy Image Scan') {
+    steps {
+        script {
+            sh """
+                docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v $(pwd):/root/.cache/ aquasec/trivy image \
+                --no-progress \
+                --scanners vuln \
+                --severity HIGH,CRITICAL \
+                --exit-code 0 \
+                --format table \
+                rukminihub/reddit-clone-pipeline:latest > trivyimage.txt
+            """
+        }
     }
-       
 }
+
+    }   
 }
+
