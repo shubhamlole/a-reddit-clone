@@ -66,7 +66,7 @@ pipeline{
         stage('Trivy Image Scan') {
     steps {
         script {
-            sh """
+            sh '''
                 docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v $(pwd):/root/.cache/ aquasec/trivy image \
                 --no-progress \
                 --scanners vuln \
@@ -74,7 +74,7 @@ pipeline{
                 --exit-code 0 \
                 --format table \
                 rukminihub/reddit-clone-pipeline:latest > trivyimage.txt
-            """
+            '''
         }
     }
 }
