@@ -64,21 +64,28 @@ pipeline{
             }
         }
         stage('Trivy Image Scan') {
-    steps {
-        script {
-            sh '''
-                docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v $(pwd):/root/.cache/ aquasec/trivy image \
-                --no-progress \
-                --scanners vuln \
-                --severity HIGH,CRITICAL \
-                --exit-code 0 \
-                --format table \
-                rukminihub/reddit-clone-pipeline:latest > trivyimage.txt
-            '''
+            steps {
+                script {
+                    sh '''
+                    docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v $(pwd):/root/.cache/ aquasec/trivy image \
+                    --no-progress \
+                    --scanners vuln \
+                    --severity HIGH,CRITICAL \
+                    --exit-code 0 \
+                    --format table \
+                    rukminihub/reddit-clone-pipeline:latest > trivyimage.txt
+                 '''
+                }
+            }    
+                
+        }
+        stage('Clean Up Artifact'){
+            steps{
+                sh "docker rmi ${IMAGE_NAME}:${IMAGE_TAG}"
+                sh "docker rmi ${IMAGE_NAME}:latest"
+                }
+            }
         }
     }
-}
-
-    }   
 }
 
