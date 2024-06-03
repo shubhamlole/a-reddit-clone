@@ -12,6 +12,7 @@ pipeline{
         DOCKER_PASS = "dockerhub"
         IMAGE_NAME = "${DOCKER_USER}" + "/" + "${APP_NAME}"
         IMAGE_TAG = "${RELEASE}-${BUILD_NUMBER}"
+        JENKINS_API_TOKEN = credentials("JENKINS_API_TOKEN")
 
     }
     stages{
@@ -85,6 +86,13 @@ pipeline{
 
                  sh "docker rmi ${IMAGE_NAME}:${IMAGE_TAG}"
                  sh "docker rmi ${IMAGE_NAME}:latest"
+                }
+            }
+        }
+        stage('Trigger CD Job'){
+            steps{
+                 script {
+                    sh "curl -v -k --user rukmini:${JENKINS_API_TOKEN} -X POST -H 'cache-control: no-cache' -H 'content-type: application/x-www-form-urlencoded' --data 'IMAGE_TAG=${IMAGE_TAG}' 'ec2-43-205-128-90.ap-south-1.compute.amazonaws.com:8080/job/Reddit-Clone-CD/buildWithParameters?token=gitops-token'"
                 }
             }
         }
