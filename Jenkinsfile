@@ -16,7 +16,7 @@ pipeline{
     stages{
         stage('Cleanup Workspace'){
             steps{
-                cleanWS()
+                cleanWs()
             }
         }
         stage('git clone'){
