@@ -21,7 +21,7 @@ pipeline{
         }
         stage('git clone'){
             steps{
-                git branch: 'main', url: 'https://github.com/shubhamlole1166/a-reddit-clone.git' 
+                git branch: 'main', url: 'https://github.com/shubhamlole/a-reddit-clone.git' 
             }
         }    
     }
