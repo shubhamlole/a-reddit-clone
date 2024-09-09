@@ -29,7 +29,7 @@ pipeline{
                 withSonarQubeEnv('SonarQube-Server'){
                     sh '''$SCANNER_HOME/bin/sonar-scanner \
                     -Dsonar.projectName=Reddit-Clone-CI \
-                    -Dsonar.projectKey= Reddit-Clone-CI'''
+                    -Dsonar.projectKey=Reddit-Clone-CI'''
                 }
             }
         }
