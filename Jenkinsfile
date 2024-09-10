@@ -37,5 +37,10 @@ pipeline{
                 waitForQualityGate abortPipeline: false, credentialsId: 'SonarQube-Token'
             }
         }
+        stage("Install Dependencies"){
+            steps{
+                sh "npm install"
+            }
+        }
     }
 }
