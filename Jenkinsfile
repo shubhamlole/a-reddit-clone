@@ -42,5 +42,10 @@ pipeline{
                 sh "npm install"
             }
         }
+        stage("trivy fs scan"){
+            steps{
+                sh "trivy fs . > trivyfs.txt"
+            }
+        }
     }
 }
