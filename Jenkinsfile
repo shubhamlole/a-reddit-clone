@@ -76,4 +76,15 @@ pipeline{
             }
         }
     }
+    post{
+        always{
+            emaiext attachLog:true,
+                subject: "'${currentBuild.result}'"
+                body: "Project: ${env.JOB_NAME}<br/>" +
+                      "Build Number: ${env.BUILD_NUMBER}<br/>" +
+                      "URL: ${env.BUILD_URL}<br/>",
+                to: 'loleshubham46@gmail.com'
+                attachmentsPattern: 'trivyfs.txt, trivyimage.txt'
+        }
+    }
 }
