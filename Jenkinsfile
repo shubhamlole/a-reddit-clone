@@ -95,5 +95,6 @@ pipeline{
             to: 'loleshubham46@gmail.com',
             attachmentsPattern: 'trivyfs.txt,trivyimage.txt'
         )
+     }
     }
 }
